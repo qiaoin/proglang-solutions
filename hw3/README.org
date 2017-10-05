@@ -1,0 +1,182 @@
+#+TITLE: Programming Languages Assignment 3
+#+AUTHOR: qiaoin
+#+EMAIL: qiao.liubing@gmail.com
+#+OPTIONS: toc:3 num:nil
+#+STARTUP: showall
+
+1.
+#+BEGIN_QUOTE
+Write a function =only_capitals= that takes a =string list= and returns a =string list= that has only
+the strings in the argument that start with an uppercase letter. Assume all strings have at least 1 
+character. Use =List.filter= , =Char.isUpper= , and =String.sub= to make a 1-2 line solution.
+#+END_QUOTE
+
+思路：首先明白 =List.filter= 的作用原理，参见 Section 3 =Maps and filters= ，可以使用 REPL 直接进行测试，熟悉
+=Char.isUpper= 和 =String.sub= 的用法。另外需要注意的一点是， =List.filter= 等系统提供的函数，均为柯里化形式的，
+进行调用时不需要括号和逗号，以空格分隔开各个调用的参数即可。
+
+#+BEGIN_SRC sml
+String.sub("Hello"， 0) (* #"H" , 这里需要注意的是字符串的索引下标是从 0 开始的 *)
+Char.isUpper(#"H") (* true . 这里需要注意的是如何定义 Char，参考上一行测试的返回就可以知道 *)
+#+END_SRC
+
+2. 
+#+BEGIN_QUOTE
+Write a function =longest_string1= that takes a =string list= and returns the longest =string= in the list.
+If the list is empty, return ~""~ . In the case of tie, return the string closest to the beginning of the
+list. Use =List.foldl= , =String.size= , and no recursion (other than the implementation of =List.foldl= 
+is recursive).
+#+END_QUOTE
+
+思路：同样是使用 REPL 去考察一下，对于 =List.foldl= ， =acc= 应该是第几个参数，传入的 =f= 的形式又是怎么样的。
+
+#+BEGIN_SRC sml
+List.foldl; (* val it = fn : ('a * 'b -> 'b) -> 'b -> 'a list -> 'b *)
+#+END_SRC
+
+因此，可以知道第一个参数为传入的函数，第二个参数为 =acc= ，第三个参数为作用的列表了。而对于将要传入的函数， ='b= 表示 =acc= 。 
+
+3. 
+#+BEGIN_QUOTE
+Write a function =longest_string2= that exactly like =longest_string1= except in the case of ties it returns
+the string closest to the end of the list. Your solution should be almost an exact copy of =long_string1= .
+Still use =List.foldl= and =String.size= .
+#+END_QUOTE
+
+思路：与 2 一致，当处理传入的函数时，稍有变化。
+
+4. 
+#+BEGIN_QUOTE
+Write functions =longest_string_helper= , =longest_string3= , and =longest_string4= such that:
+- =longest_string3= has the same behavior as =longest_string1= and =longest_string4= has the same behavior as =longest_string2= .
+- =longest_string_helper= has type =(int * int -> bool) -> string list -> string= (notice the currying). This function will look a lot like =longest_string1= and =longest_string2= but is more general because it takes a function as an argument.
+- if =longest_string_helper= is passed a function that behaves like =>= (so it returns =true= exactly when its first argument is stricly greater than its second), then the function returned has the same behavior as =longest_string1= .
+- =longest_string3= and =longest_string4= are defined with val-bindings and partial applications of =longest_string_helper= .
+#+END_QUOTE
+
+思路：其实这个的意思就是说，在 1 和 2 中，当处理传入的函数时，我们是直接进行的比较，这里将这一比较操作抽象为另外一个函数参数进行传入。
+
+5. 
+#+BEGIN_QUOTE
+Write a function =longest_capitalized= that takes a =string list= and returns the longest string in the list
+that begins with an uppercase letter, or ~""~ if there are no such strings. Assume all strings have at least
+1 character. Use a val-binding and the ML library's =o= operator for composing functions. Resolve ties like 
+in problem 2. 
+#+END_QUOTE
+
+思路：复合函数的考察，参考 Section 3 =Another Closure Idiom: Combining Function=
+
+6. 
+#+BEGIN_QUOTE
+Write a function =rev_string= that takes a =string= and returns a =string= that is the same character
+in reverse order. Use ML's =o= operator, the library function =rev= for reversing lists, and two library
+functions in the =String= module. (Browse the module documentation to find the most useful functions.)
+#+END_QUOTE
+
+思路：同样使用 REPL 查看 =rev= 的使用，以及上网查 =String= 模块包含的函数。
+
+#+BEGIN_SRC sml
+rev [1, 2, 3, 4]; (* [4, 3, 2, 1] *)
+String.explode "Hello"; (* [#"H",#"e",#"l",#"l",#"o"] *)
+String.implode [#"H",#"e",#"l",#"l",#"o"]; (* "Hello" *)
+#+END_SRC
+
+problem 1-6 代码实现 [[file:longest_string.sml][longest_string.sml]] 
+
+7.
+#+BEGIN_QUOTE
+Write a function =first_answer= of type =('a -> 'b option) -> 'a list -> 'b= (notice the 2 arguments are curried).
+The first argument should be applied to elements of the second argument in order until the first time it returns
+=SOME v= for some =v= and then =v= is the result of the call to =first_answer= . If the first argument returns 
+=NONE= for all list elements, then =first_answer= should raise the exception =NoAnswer= . Hints: Sample solution 
+is 5 lines and does nothing fancy.
+#+END_QUOTE
+
+思路：一个 =case= 表达式即可。
+
+8.
+#+BEGIN_QUOTE
+Write a function =all_answers= of type =('a -> 'b list option) -> 'a list -> 'b list option= (notice the 2 arguments
+are curried). The first argument should be applied to elements of the second argument. If it returns =NONE= for
+any element, then the result for =all_answers= is =NONE= . Else the calls to the first argument will have produced
+=SOME lst1= , =SOME lst2= , ..., =SOME lstn= and the result of =all_answers= is =SOME lst= where =lst= is 
+=lst1= , =lst2= , ..., =lstn= appended together (order doesn't matter). Hints: The sample solution is 8 lines. It 
+uses a helper function with an accumulator and uses =@= . Note =all_answers f []= should evaluate to =SOME []= . 
+#+END_QUOTE
+
+代码实现 [[file:first_and_all_answers.sml][first_and_all_answers.sml]] 
+
+#+BEGIN_QUOTE
+The remaining problems use these type definitions, which are inspired by the type definitions an ML implementation
+would use to implement pattern matching:
+
+~datatype pattern = WildcardP | VariableP of string | UnitP | ConstantP of int | TupleP of pattern list | ConstructorP of string * pattern~
+
+~datatype valu = Constant of int | Unit | Tuple of valu list | Constructor of string * valu~
+
+Given =valu v= and =pattern p= , either =p= matches =v= or not. If it does, the match produces a list of =string * valu=
+pairs; order in the list does not matter. The rules for matching should be unsurprising:
+- =WildcardP= matches everything and produces the empty list of bindings.
+- =VariableP s= matches any value =v= and produces the one-element list holding =(s, v)= .
+- =UnitP= matching only =Unit= and produces the empty list of bindings.
+- =ConstP 17= matches only =Const 17= and produces the empty list of bindings (and similarly for other integers).
+- =Tuplep ps= matches a value of the form =Tuple vs= if =ps= and =vs= have the same length and for all =i= , the =ith= element of =ps= matches the =ith= elements of =vs= . The list of bindings produced is all the lists from the nested pattern matches appended together.
+- =Constructorp(s1, p)= matches =COnstructor(s2, v)= if =s1= and =s2= are the same string (you can compare them with ~=~ ) and =p= matches =v= . The list of bindings produced is the list from the nested pattern match. We call the strings =s1= and =s2= the constructor name.
+- Nothing else matches. 
+#+END_QUOTE
+
+9. 
+#+BEGIN_QUOTE
+(This problem uses the =pattern= datatype but is not really about pattern-matching.) A function =g= has been provided to you.
+
+(a) Use =g= to define a function =count_wildcatds= that takes a pattern and returns how many =Wildcard= pattern it contains.
+
+(b) Use =g= to define a function =count_wild_and_variable_lengths= that takes a pattern and returns the number of =Wildcard=
+patterns it contains plus the sum of the string lengths of all the variables in the variable patterns it contains. (Use
+=String.size= . We care only about variable names; the constructor names are not relevant.)
+
+(c) Use =g= to define a function =count_some_var= that takes a string and a pattern (as a pair) and returns the number of 
+the times the string appears as a variable in the pattern. We care only about variable names; the constructor names are
+not relevant.
+#+END_QUOTE
+
+思路：主要是先分析 =g= 这个函数的实现，如果能分析清楚，将 (a) (b) (c) 实现出来并不困难。
+
+10.
+#+BEGIN_QUOTE
+Write a function =check_pat= that takes a pattern and returns true if and only if all the variables appearing in the pattern
+are distinct from each other (i.e., use different strings). The constructor name are not relevant. Hints: The sample solution
+uses two helper functions. The first takes a pattern and returns a list of all the strings it uses for variables. Using 
+=List.foldl= with a function taht uses =@= is useful in one case. The second takes a list of strings and decides if it has 
+repeats. =List.exists= may be useful. Sample solution is 15 lines. There are hints: We are not requiring =List.foldl= and 
+=List.exists= here, but they make it easier.
+#+END_QUOTE
+
+思路：在题目的 =Hints= 中已经说的很清楚了。第一个辅助函数的实现可以参考 =g= 的实现。第二个辅助函数是为了去检查一个列表中是否有重复的元素，我们可以每次检查
+第一个元素是否在剩余元素中有重复，若第一个元素在剩余元素中出现过，则返回 =true= ；若第一个元素在剩余元素中未再次出现，则说明第一个元素对应的数值不是重复出现
+的那个数值，就可以去除掉第一个元素，开始考察剩余元素中是否有重复的元素，这样一步步的缩小比较的范围，从而判断是否有重复元素。
+
+11.
+#+BEGIN_QUOTE
+Write a function =match= that takes a =valu * pattern= and returns a =(string * valu) list option= , namely =NONE= if the 
+pattern does not match and =SOME lst= where =lst= is the list of bindings if it does. Note that if the value matches but 
+the pattern has no patterns of the form =VariableP s= , then the result is =SOME []= . Hints: Sample solution has one 
+case expression with 7 branches. The branck for tuples uses =all_answers= and =ListPair.zip= . Simple soution is 13 lines.
+Remember to look above for the rules for what patterns match what values, what bindings they produce. There are hints: We
+are not requiring =all_answers= and =ListPair.zip= here, but they make it easier.
+#+END_QUOTE
+
+思路：比对着 =matching rules= 进行一个一个写，参考题目中的 =Hnts= 即可。
+
+12.
+#+BEGIN_QUOTE
+Write a function =first_match= that takes a value and a list of patterns and returns a =(string * valu) list option= , 
+namely =NONE= if no pattern in the list matches or =SOME lst= where =lst= is the list of bindings for the first pattern
+in the list that matches. Use =first_answer= and a =handle-expression= . Hints: Sample solution is 3 lines.
+#+END_QUOTE
+
+思路：将 =value= 与每一个 =pattern= 创建一个 =tuple= 就可以调用 11 中的 =match= 函数了。
+
+代码实现 [[file:pattern_matching.sml][pattern_matching.sml]] 代码实现有点问题， *TODO* Fix it
+
+*Challenge Problem*
