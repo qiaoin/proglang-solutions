@@ -74,7 +74,7 @@ and your answer to the previous problem. For consistency, put a comma following 
 month names: January, February, March, April, May, June, July, August, September, October, November, December.
 #+END_QUOTE
 
-代码实现 [[file:date_to_string.sml][date_to_string.sml]] 这个代码还待完善， =case= 为 =[]= 的时候现在是直接返回了 ="none"= ，这应该还是有点问题的。
+代码实现 [[file:date_to_string.sml][date_to_string.sml]] 这个代码还待完善， =case= 为 =[]= 的时候现在是直接返回了 =none= ，这应该还是有点问题的。
 
 8.
 #+BEGIN_QUOTE

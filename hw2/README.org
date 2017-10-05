@@ -1,0 +1,167 @@
+#+TITLE: Programming Languages Assignment 2
+#+AUTHOR: qiaoin
+#+EMAIL: qiao.liubing@gmail.com
+#+OPTIONS: toc:3 num:nil
+#+STARTUP: showall
+
+1.
+#+BEGIN_QUOTE
+This problem involves using first-name substitutions to come up with alternate names. For example, 
+Fredrick William Smith could also be Fred William Smith or Freddie William Smith. Only part (d) is 
+specifically about this, but the other problems are helpful.
+#+END_QUOTE
+
+(a)
+#+BEGIN_QUOTE
+Write a function =all_except_option= , which takes a =string= and a =string list= . Return =NONE= 
+if the string is not in the list, else return =SOME lst= where =lst= is identical to the argument list
+except the string is not in it. You may assume the string is in the list at most once. Use =same_string= ,
+provided to you, to compare strings. Sample solution is around 8 lines.
+#+END_QUOTE
+
+思路：使用 =acc= 来记录已经比较过的 =string list= ，使用 =left= 记录未比较的 =string list= ，正在比较的元素用 =target=
+来指定，其与给定的 =s= 进行比较，若二者相等，则最后的返回结果为 =SOME (acc @ left)= ；否则，将 =target= 加入到 =acc= 中，
+将 =left= 中的第一个元素作为新的 =target= ，剩余元素作为新的 =left= 。与 =s= 再次进行比较，如此反复。
+
+(b)
+#+BEGIN_QUOTE
+Write a function =get_substitutions1= , which takes a =string list list= (a list of list of strings, the
+substitutions) and a =string= s and return a =string list= . The result has all the strings that are 
+in some list in substitutions that also has s, but s itself should not be in the result. Example:
+=get_substitutions1([["Fred", "Fredrick"], ["Elizabeth", "Betty"], ["Freddie", "Fred", "F"]], "Fred")=
+(* answer: =["Fredrick", "Freddie", "F"]= *)
+Assume each list in substitutions has no repeats. The result will have repeats if s and another string
+are both in more than one list in substitutions. Example:
+=get_substitutions1([["Fred", "Fredrick"], ["Jeff", "Jeffrey"], ["Geoff", "Jeff", "Jeffrey"]], "Jeff")=
+(* answer: =["Jeffrey", "Geoff", "Jeffrey"]= *) 
+#+END_QUOTE
+
+思路： =all_except_option= 函数接受一个 =string list= 和一个 =s= ，其返回一个不包含 =s= 的 =string list= 。使用 
+=all_except_option= 作为一个辅助函数，遍历 =string list list= 每次得到一个 =string list= ，就可以调用 =all_except_option=
+来得到结果了（如果 =string list= 中包含 =s= ，则返回去除掉 =s= 之后的 =string list= ；否则返回 =NONE= ）。
+
+(c)
+#+BEGIN_QUOTE
+Write a function =get_substibutions2= ,which is like =get_substitutions1= except it uses a tail-recursive 
+local helper function.
+#+END_QUOTE
+
+思路：同（b），尾递归实现可以参考 Section 2 =Tail Recursion and Accumulators=
+
+(d)
+#+BEGIN_QUOTE
+Write a function =similar_names= , which takes a =string list list= of substitutions (as parts (b) and (c))
+and a full name of type ={first:string, middle:string, last:string}= and returns a list of full names
+(type ={first:string, middle:string, last:string} list= ). The result is all the full names you can produce
+by substituting for the first name (and only the first name) using substitutions and parts (b) or (c).
+The answer should begin with the original name (then have 0 or more other names). Example:
+~similar_names([["Fred", "Fredrick"], ["Elizabeth", "Betty"], ["Freddie", "Fred", "F"]], 
+               {first="Fred", middle="W", last="Smith"})~
+(* answer: ~[{first="Fred", last="Smith", middle="W"}, {first="Fredrick", last="Smith", middle="W"},
+             {first="Freddie", last="Smith", middle="W"}, {first="F", last="Smith", middle="W"}]~ *)
+#+END_QUOTE
+
+思路：首先使用 =get_substitutions2= 获得 =first name= 的替换列表，然后遍历进行替换即可。
+
+代码实现 [[file:name_substitutions.sml][name_substitutions.sml]] 
+
+2.
+#+BEGIN_QUOTE
+This problem involves a solitaire card game invented just for this question. You will write a program
+that tracks the progress of a game; writing a game player is a challenge problem. You can do parts (a)
+- (e) before understanding the game if you wish.
+A game is played with a =card-list= and a =goal= . The player has a list of =held-cards= , initially empty.
+The player makes a move by either =drawing= , which means removing the first card in the =card-list= from 
+the =card-list= and adding it to the =held-cards= , or =discarding= , which means choosing one of the =held-cards=
+to remove. The game ends either when the player chooses to make no more moves or when the sum of the values
+of the =held-cards= is greater than the =goal= .
+The objective is to end the game with a low score (0 is best). Scoring works as follows: Let =sum= be the 
+sum of the values of the =held-cards= . If =sum= is greater than =goal= , the preliminary score is three
+times (sum - goal), else the preliminary score is (goal - sum). The score is the preliminary score unless 
+all the =held-cards= are the same color, in which case the score is the preliminary score divided by 2 
+(and rounded down as usual with integer division; use ML's =div= operator). 
+#+END_QUOTE
+
+(a)
+#+BEGIN_QUOTE
+Write a function =card_color= , which takes a card and returns its color (spades and clubs are black, diamonds
+and hearts are red). Note: One case-expression is enough.
+#+END_QUOTE
+
+(b)
+#+BEGIN_QUOTE
+Write a function =card_value= , which takes a card and returns its value (numbered cards have their number
+as the value, aces are 11, everything else is 10). Note: One case-expression is enough.
+#+END_QUOTE
+
+(c)
+#+BEGIN_QUOTE
+Write a function =remove_card= , which takes a list of cards =cs= , a card =c= , and an exception =e= . It 
+returns a list that has all the elements of =cs= except =c= . If =c= is in the list more than once, remove 
+only the first one. If =c= is not in the list, raise the exception =e= . You can compare cards with ~=~ . 
+#+END_QUOTE
+
+思路：可以直接参考 1 中 =all_except_option= 的实现。
+
+(d)
+#+BEGIN_QUOTE
+Write a function =all_same_color= , which takes a list of cards and returns true if all the cards in the list
+are the same color. Hint: An elegant solution is very similar to one of the functions using nested pattern-matching
+in the lectures.
+#+END_QUOTE
+
+思路：参考 Section 2 =Useful Examples of Nested Patterns= 中的 =nondecreasing= 函数。
+
+(e)
+#+BEGIN_QUOTE
+Write a function =sum_cards= , which takes a list of cards and returns the sum of their values. Use a locally
+defined helper function that is tail recursive. (Take "calls use a constant amount of stack space" as a requirement
+for this problem.) 
+#+END_QUOTE
+
+思路：尾递归，很简单就可以实现。
+
+(f)
+#+BEGIN_QUOTE
+Write a function =score= , which takes a card list (the =held-card= ) and an =int= (the =goal= ) and computes
+the scores as described above.
+#+END_QUOTE
+
+(g)
+#+BEGIN_QUOTE
+Write a function =officiate= , which "run a game". It takes a card list (the =card-list= ), a move list (what 
+the player "does" at each point), and an =int= (the =goal= ) and returns the score at the end of the game 
+after processing (some or all of) the moves in the move list in order. Use a locally defined recursive helper 
+function that takes several arguments that together represent the current state of the game. As described above:
+- The game starts with the =held-cards= being the empty list.
+- The game ends if there are no more moves. (The player chose to stop since the move list is empty.)
+- If the player discards some card =c= , play continues (i.e., make a recursive call) with the =held-cards= not
+having =c= and the =card-list= unchanged. If =c= is not in the =held-cards= , raise the =IllegalMove= exception.
+- If the player draws and the =card-list= is (already) empty, the game is over. Else if drawing causes the sum 
+of the =held-cards= to exceed the goal, the game is over (after drawing). Else play continues with a larger
+=held-cards= and a smaller =card-list=.
+#+END_QUOTE.
+
+思路：假设 =helper= 为辅助函数，其依次接受三个参数， =card-list= 表示现在桌上你能够抓的牌的集合， =move-list= 表示玩家将执行的操作
+的集合， =held-cards= 表示现在玩家手上已经有的牌的集合。首先考察 =move-list= ，若其为空，则表示没有操作可以在接下来执行，游戏结束，直接
+计算得分即可；若 =move-list= 不为空，依次考察每一个操作，判断是抓牌 =Draw= 还是出牌 =Discard c= 。若为出牌 =Discard c= ，则
+=helper (card-list, move-list', remove_card(held_card, c, IllegalMove))= 即可；若为 =Draw= ，则需要进一步去判断 =card-list=
+是否已经为空，若已经为空了，游戏结束，计算得分，若还有牌可以抓，则抓牌，判断抓上这张牌之后 =c :: held_car= 的 =sum_cards= 已经超出了 =goal= ，
+同样游戏结束，直接计算得分，否则抓牌成功。具体实现，还是参看代码。
+
+代码实现 [[file:solitaire_card_game.sml][solitaire_card_game.sml]]
+
+3.
+*Challenge Problems*
+(a)
+#+BEGIN_QUOTE
+Write =socre_challenge= and =officiate_challenge= to be like their non-challenge counterparts except each ace
+can have a value of 1 or 11 and =score_challenge= should always return the least (i.e., best) possible score.
+(Note the game-ends-if-sum-exceeds-goal rule should apply only if there is no sum that is less then or equal
+to the =goal= .) Hint: This is easier than you might think.
+#+END_QUOTE
+
+代码实现 [[file:solitaire_card_game_challenge_a.sml][solitaire_card_game_challenge_a.sml]] 未实现， *TOTO*
+
+(b)
+
