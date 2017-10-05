@@ -8,8 +8,8 @@ fun number_in_month (xs : (int*int*int) list, month : int) =
   case xs of
       [] => 0
     | (_, x, _) :: xs' => if x=month
-                         then number_in_month (xs', month) + 1
-                         else number_in_month (xs', month);
+                          then number_in_month (xs', month) + 1
+                          else number_in_month (xs', month);
 
 fun number_in_months (xs : (int*int*int) list, months : int list) =
   case months of

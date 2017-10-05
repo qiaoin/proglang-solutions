@@ -5,8 +5,8 @@ fun dates_in_month (xs : (int*int*int) list, month : int) =
   case xs of
       [] => []
     | (x, y, z)::xs' => if y=month
-                       then (x, y, z) :: dates_in_month (xs', month)
-                       else dates_in_month (xs', month);
+                        then (x, y, z) :: dates_in_month (xs', month)
+                        else dates_in_month (xs', month);
 
 val date1 = (2000, 1, 12);
 val date2 = (1994, 7, 16);

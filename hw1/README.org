@@ -20,7 +20,7 @@ are the same, the result is =false= .)
 
 代码实现 [[file:is_older.sml][is_older.sml]] 
 
-2. 
+2.
 #+BEGIN_QUOTE
 Write a function =number_in_month= that takes a list of dates and a month (i.e., an =int= ) and returns
 how many dates in the list are in the given month.
@@ -28,7 +28,7 @@ how many dates in the list are in the given month.
 
 代码实现 [[file:number_in_month.sml][number_in_month.sml]]
 
-3. 
+3.
 #+BEGIN_QUOTE
 Write a function =number_in_months= that takes a list of dates and a list of months (i.e., an =int list= )
 and return the number of dates in the list of dates that are in any of the months in the list of months. 
@@ -37,7 +37,7 @@ Assume the list of months has no number repeated. Hint: Use your answer to the p
 
 代码实现 [[file:number_in_months.sml][number_in_months.sml]]
 
-4. 
+4.
 #+BEGIN_QUOTE
 Write a function =dates_in_month= that takes a list of dates and a month (i.e., an =int= ) and return a list
 holding the dates from the argument list of dates that are in the month. The returned list should contain 
@@ -46,7 +46,7 @@ dates in the order they were originally given.
 
 代码实现 [[file:dates_in_month.sml][dates_in_month.sml]]
 
-5. 
+5.
 #+BEGIN_QUOTE
 Write a function =dates_in_months= that takes a list of dates and a list of months (i.e., an =int list= ) and
 returns a list holding the dates from the argument list of dates that are in any of the months in the list of 
@@ -56,7 +56,7 @@ SML's list-append operator (@).
 
 代码实现 [[file:dates_in_months.sml][dates_in_months.sml]]
 
-6. 
+6.
 #+BEGIN_QUOTE
 Write a function =get_nth= that takes a list of strings and an =int= n and return the nth element of the list
 where the head of the list is 1st. Do not worry about the case where the list has too few elements: your function
@@ -87,7 +87,7 @@ the case.
 
 代码实现 [[file:number_before_reaching_sum.sml][number_before_reaching_sum.sml]]
 
-9. 
+9.
 #+BEGIN_QUOTE
 Write a function =what_month= that takes a day of year (i.e., an =int= between 1 and 365) and returns what month that day
 is in (1 for January, 2 for February, etc.). Use a list holding 12 integers and your answer to the previous problem. 
@@ -112,18 +112,18 @@ the list has no dates and =SOME d= if the date d is the oldest date in the list.
 
 代码实现 [[file:oldest.sml][oldest.sml]] 借鉴了 Section 1 的 =Let Expressions= & =Options= 和 Section 2 的 =Useful Examples of Nested Patterns=
 
-12. *Challenge Problem*
+12.
 #+BEGIN_QUOTE
-Write functions =number_in_months_challenge= and =dates_in_months_challenge= that are like you solutions to problem 3 and 5
+*Challenge Problem* . Write functions =number_in_months_challenge= and =dates_in_months_challenge= that are like you solutions to problem 3 and 5
 except having a month in the second argument multiple times has no more effect than having it once. (Hint: Remove duplicates,
 then use previous work.)
 #+END_QUOTE
 
 代码实现 [[file:number_in_months_challenge.sml][number_in_months_challenge.sml]] [[file:dates_in_months_challenge.sml][dates_in_months_challenge.sml]] 仅添加了一个去重的操作
 
-13. *Challenge Problem*
+13.
 #+BEGIN_QUOTE
-Write a function =reasonable_date= that takes a date and determines if it describes a real date in the common era. A "real date"
+*Challenge Problem* . Write a function =reasonable_date= that takes a date and determines if it describes a real date in the common era. A "real date"
 has a positive year (year 0 did not exist), a month between 1 and 12, and a day appropriate for the month. Solutions should 
 properly handle leap years. Leap yars are years that are either divisible by 400 or divisible by 4 but not divisible by 100. 
 (Do not worry about days possibly lost in the conversion to the Gregorian calendar in the Late 1500s.)

@@ -2,8 +2,8 @@ fun dates_in_month (xs : (int*int*int) list, month : int) =
   case xs of
       [] => []
     | (x, y, z)::xs' => if y=month
-                       then (x, y, z) :: dates_in_month (xs', month)
-                       else dates_in_month (xs', month);
+                        then (x, y, z) :: dates_in_month (xs', month)
+                        else dates_in_month (xs', month);
 
 fun dates_in_months (xs : (int*int*int) list, months : int list) =
   case months of
