@@ -1,0 +1,132 @@
+#+TITLE: Programming Languages Assignment 1
+#+AUTHOR: qiaoin
+#+EMAIL: qiao.liubing@gmail.com
+#+OPTIONS: toc:3 num:nil
+#+STARTUP: showall
+
+在 Assignment 1 中我们将围绕日历来编写 11 个 SML 函数，以及对应的测试用例。在将要列出所有的问题中，
+=date= 均表示为 SML 中的 =int * int * int= 类型，依次对应年/月/日。当一个 =date= 满足1）年份为正数，
+2）月份在 1 到 12 之间，3）日期不会超过 31 （当然根据月份不同，每个月对应的天数也各不相同）这三个条件
+时，我们称其为 =reasonable date= 。仅仅在一个挑战题中我们需要对 =date= 是否为 =reasonable= 进行检查，
+其他情况下都默认为 =reasonable date= 。另外，一般情况下，仅考虑平年，一年中的某一天，其对应为 1 到 355 的
+某一个数字。
+
+1.
+#+BEGIN_QUOTE
+Write a function =is_older= that takes two dates and evaluates to =true= or =false=. It evaluates
+to =true= if the first argument is a date that comes before the second argument. (If the two dates
+are the same, the result is =false= .)  
+#+END_QUOTE
+
+代码实现 [[file:is_older.sml][is_older.sml]] 
+
+2. 
+#+BEGIN_QUOTE
+Write a function =number_in_month= that takes a list of dates and a month (i.e., an =int= ) and returns
+how many dates in the list are in the given month.
+#+END_QUOTE
+
+代码实现 [[file:number_in_month.sml][number_in_month.sml]]
+
+3. 
+#+BEGIN_QUOTE
+Write a function =number_in_months= that takes a list of dates and a list of months (i.e., an =int list= )
+and return the number of dates in the list of dates that are in any of the months in the list of months. 
+Assume the list of months has no number repeated. Hint: Use your answer to the previous problem.
+#+END_QUOTE
+
+代码实现 [[file:number_in_months.sml][number_in_months.sml]]
+
+4. 
+#+BEGIN_QUOTE
+Write a function =dates_in_month= that takes a list of dates and a month (i.e., an =int= ) and return a list
+holding the dates from the argument list of dates that are in the month. The returned list should contain 
+dates in the order they were originally given.
+#+END_QUOTE
+
+代码实现 [[file:dates_in_month.sml][dates_in_month.sml]]
+
+5. 
+#+BEGIN_QUOTE
+Write a function =dates_in_months= that takes a list of dates and a list of months (i.e., an =int list= ) and
+returns a list holding the dates from the argument list of dates that are in any of the months in the list of 
+months. Assume the list of months has no number repeared. Hint: Use your answer to the previous problem and 
+SML's list-append operator (@).
+#+END_QUOTE
+
+代码实现 [[file:dates_in_months.sml][dates_in_months.sml]]
+
+6. 
+#+BEGIN_QUOTE
+Write a function =get_nth= that takes a list of strings and an =int= n and return the nth element of the list
+where the head of the list is 1st. Do not worry about the case where the list has too few elements: your function
+may apply =hd= or =tl= to the empty list in this case, which is okay.
+#+END_QUOTE
+
+代码实现 [[file:get_nth.sml][get_nth.sml]] 
+
+7.
+#+BEGIN_QUOTE
+Write a function =date_to_string= that takes a date and returns a =string= of the form =January 20, 2013= (for example).
+Use the operator =^= for concatenating strings and the library function =Int.toString= for converting an =int= to
+a =string= . For producing the month part, do not use a bunch of conditionals. Instead, use a list holding 12 strings 
+and your answer to the previous problem. For consistency, put a comma following the day and use capitalized English
+month names: January, February, March, April, May, June, July, August, September, October, November, December.
+#+END_QUOTE
+
+代码实现 [[file:date_to_string.sml][date_to_string.sml]] 这个代码还待完善， =case= 为 =[]= 的时候现在是直接返回了 ="none"= ，这应该还是有点问题的。
+
+8.
+#+BEGIN_QUOTE
+Write a function =number_before_reaching_sum= that takes an =int= called sum, which you can assume is positive, and an
+=int list= , which you can assume contains all positive numbers, and returns an =int= . You should return an int =n= 
+such that the first n elements of the list add to less than sum, but the first n+1 elements of the list add to sum or
+more. Assume the entire list sums to more than the passed in value; it is okay for an exception to occur if this is not 
+the case.
+#+END_QUOTE
+
+代码实现 [[file:number_before_reaching_sum.sml][number_before_reaching_sum.sml]]
+
+9. 
+#+BEGIN_QUOTE
+Write a function =what_month= that takes a day of year (i.e., an =int= between 1 and 365) and returns what month that day
+is in (1 for January, 2 for February, etc.). Use a list holding 12 integers and your answer to the previous problem. 
+#+END_QUOTE
+
+代码实现 [[file:what_month.sml][what_month.sml]] 
+
+10.
+#+BEGIN_QUOTE
+Write a function =month_range= that takes two days of the year day1 and day2 and returns an =int list= [m1, m2, ..., mn]
+where m1 is the month of day1, m2 is the month of day1+1, ..., and mn is the month of day2. Note the result will have length
+day2-day1+1 or length 0 if day1>day2.
+#+END_QUOTE
+
+代码实现 [[file:month_range.sml][month_range.sml]]
+
+11.
+#+BEGIN_QUOTE
+Write a function =oldest= that takes a list of dates and evaluates to an (int*int*int) option. It evaluates to =NONE= if 
+the list has no dates and =SOME d= if the date d is the oldest date in the list.
+#+END_QUOTE
+
+代码实现 [[file:oldest.sml][oldest.sml]] 借鉴了 Section 1 的 =Let Expressions= & =Options= 和 Section 2 的 =Useful Examples of Nested Patterns=
+
+12. *Challenge Problem*
+#+BEGIN_QUOTE
+Write functions =number_in_months_challenge= and =dates_in_months_challenge= that are like you solutions to problem 3 and 5
+except having a month in the second argument multiple times has no more effect than having it once. (Hint: Remove duplicates,
+then use previous work.)
+#+END_QUOTE
+
+代码实现 [[file:number_in_months_challenge.sml][number_in_months_challenge.sml]] [[file:dates_in_months_challenge.sml][dates_in_months_challenge.sml]] 仅添加了一个去重的操作
+
+13. *Challenge Problem*
+#+BEGIN_QUOTE
+Write a function =reasonable_date= that takes a date and determines if it describes a real date in the common era. A "real date"
+has a positive year (year 0 did not exist), a month between 1 and 12, and a day appropriate for the month. Solutions should 
+properly handle leap years. Leap yars are years that are either divisible by 400 or divisible by 4 but not divisible by 100. 
+(Do not worry about days possibly lost in the conversion to the Gregorian calendar in the Late 1500s.)
+#+END_QUOTE
+
+代码实现 [[file:reasonable_date.sml][reasonable_date.sml]] 

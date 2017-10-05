@@ -5,5 +5,5 @@
 #+STARTUP: showall
 
 #+BEGIN_QUOTE
-主要是课程相应的 Homework 的整理，当然也会写一些对应的课程笔记，以及变成语言相关的话题。
+主要是课程 Homework 的整理，当然也会写一些课程笔记，以及编程语言相关的话题。
 #+END_QUOTE
