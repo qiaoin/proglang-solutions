@@ -20,7 +20,7 @@ String.sub("Hello"， 0) (* #"H" , 这里需要注意的是字符串的索引下
 Char.isUpper(#"H") (* true . 这里需要注意的是如何定义 Char，参考上一行测试的返回就可以知道 *)
 #+END_SRC
 
-2. 
+2.
 #+BEGIN_QUOTE
 Write a function =longest_string1= that takes a =string list= and returns the longest =string= in the list.
 If the list is empty, return ~""~ . In the case of tie, return the string closest to the beginning of the
@@ -36,7 +36,7 @@ List.foldl; (* val it = fn : ('a * 'b -> 'b) -> 'b -> 'a list -> 'b *)
 
 因此，可以知道第一个参数为传入的函数，第二个参数为 =acc= ，第三个参数为作用的列表了。而对于将要传入的函数， ='b= 表示 =acc= 。 
 
-3. 
+3.
 #+BEGIN_QUOTE
 Write a function =longest_string2= that exactly like =longest_string1= except in the case of ties it returns
 the string closest to the end of the list. Your solution should be almost an exact copy of =long_string1= .
@@ -45,7 +45,7 @@ Still use =List.foldl= and =String.size= .
 
 思路：与 2 一致，当处理传入的函数时，稍有变化。
 
-4. 
+4.
 #+BEGIN_QUOTE
 Write functions =longest_string_helper= , =longest_string3= , and =longest_string4= such that:
 - =longest_string3= has the same behavior as =longest_string1= and =longest_string4= has the same behavior as =longest_string2= .
@@ -56,7 +56,7 @@ Write functions =longest_string_helper= , =longest_string3= , and =longest_strin
 
 思路：其实这个的意思就是说，在 1 和 2 中，当处理传入的函数时，我们是直接进行的比较，这里将这一比较操作抽象为另外一个函数参数进行传入。
 
-5. 
+5.
 #+BEGIN_QUOTE
 Write a function =longest_capitalized= that takes a =string list= and returns the longest string in the list
 that begins with an uppercase letter, or ~""~ if there are no such strings. Assume all strings have at least
@@ -66,7 +66,7 @@ in problem 2.
 
 思路：复合函数的考察，参考 Section 3 =Another Closure Idiom: Combining Function=
 
-6. 
+6.
 #+BEGIN_QUOTE
 Write a function =rev_string= that takes a =string= and returns a =string= that is the same character
 in reverse order. Use ML's =o= operator, the library function =rev= for reversing lists, and two library
@@ -125,7 +125,7 @@ pairs; order in the list does not matter. The rules for matching should be unsur
 - Nothing else matches. 
 #+END_QUOTE
 
-9. 
+9.
 #+BEGIN_QUOTE
 (This problem uses the =pattern= datatype but is not really about pattern-matching.) A function =g= has been provided to you.
 
