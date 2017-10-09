@@ -175,8 +175,8 @@ namely =NONE= if no pattern in the list matches or =SOME lst= where =lst= is the
 in the list that matches. Use =first_answer= and a =handle-expression= . Hints: Sample solution is 3 lines.
 #+END_QUOTE
 
-思路：将 =value= 与每一个 =pattern= 创建一个 =tuple= 就可以调用 11 中的 =match= 函数了。
+思路：将 =value= 与每一个 =pattern= 创建一个 =tuple= 就可以调用 11 中的 =match= 函数了。需要注意返回为 =[]= 的情况和异常捕获。
 
-代码实现 [[file:pattern_matching.sml][pattern_matching.sml]] 代码实现有点问题， *TODO* Fix it
+代码实现 [[file:pattern_matching.sml][pattern_matching.sml]] 
 
 *Challenge Problem*

@@ -120,10 +120,15 @@ fun first_match (value, ps) =
                             []
                             ps)
                    ) handle NoAnswer =>
-                                        (print "exception occur\n"; [])
+                            (
+                              print "exception occur\n";
+                              [("exception", Constant ~1)]
+                            )
   in
       case result of
-          [] => NONE
+          (ex, Constant x)::[] => if ex = "exception" andalso x = ~1
+                                   then NONE
+                                   else SOME result
         | _ => SOME result
   end;
 
